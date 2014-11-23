@@ -15,4 +15,4 @@ Honey may be used under the terms of the MIT License or the BSD 2-Clause
 License at your discretion. For more information, see the [LICENSE][LICENSE]
 file.
 
-[LICENSE][./LICENSE.md]
+[LICENSE]: ./LICENSE.md
