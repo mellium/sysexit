@@ -1,11 +1,10 @@
 package config
 
 import (
+	"errors"
 	"os"
 
 	"github.com/BurntSushi/toml"
-	"github.com/SamWhited/koine"
-	"github.com/SamWhited/logger"
 )
 
 var C *config
@@ -65,11 +64,13 @@ func (c *config) LoadFile(path string) error {
 const CONFIG_FILE string = "honey.config"
 
 // Flush config and reload.
-func ReloadConfig() {
+func ReloadConfig() error {
 	if info, err := os.Stat(CONFIG_FILE); err == nil && !info.IsDir() {
 		if err := C.LoadFile(CONFIG_FILE); err != nil {
-			logger.Err("Error parsing config file " + CONFIG_FILE + ": " + err.Error())
-			return
+			return err
 		}
+	} else {
+		return errors.New("Can't find file " + CONFIG_FILE)
 	}
+	return nil
 }

@@ -1,0 +1,14 @@
+[[c2s.listen]]
+addr = "127.0.0.1:5222"
+certfile = "default.crt"
+keyfile = "default.key"
+
+[[s2s.listen]]
+addr = "127.0.0.1:5269"
+certfile = "default.crt"
+keyfile = "default.key"
+
+[[host]]
+name = "localhost"
+certfile = "default.crt"
+keyfile = "default.key"
