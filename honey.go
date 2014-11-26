@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net"
 
 	"./config"
@@ -16,7 +15,6 @@ func main() {
 		logger.Err(err.Error())
 		return
 	}
-	fmt.Println(config.C)
 
 	// Spawn S2S listeners
 	for _, v := range config.C.S2S.Services {
