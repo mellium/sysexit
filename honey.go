@@ -4,7 +4,7 @@ import (
 	"net"
 
 	"./config"
-	"./xmpp"
+	"./xmpp-core"
 
 	"github.com/SamWhited/logger"
 )
