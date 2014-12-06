@@ -19,11 +19,11 @@ type stream struct {
 }
 
 // The default XML name of XMPP stream elements.
-var NAME xml.Name = xml.Name{Space: "stream", Local: "stream"}
+var Name xml.Name = xml.Name{Space: "stream", Local: "stream"}
 
 // Fill in stream properties from an XML Start Element.
 func StreamFromStartElement(start xml.StartElement) (stream, error) {
-	if start.Name != NAME {
+	if start.Name != Name {
 		return stream{}, errors.New(start.Name.Space + ":" + start.Name.Local + " is not a valid start stream tag")
 	}
 
@@ -77,14 +77,24 @@ func (s *stream) SetTo(j jid.JID) {
 	s.STo = j.String()
 }
 
-// Convert a stream element to an array of bytes.
+// Bytes converts String() to a byte array for use with a writer.
 func (s *stream) Bytes() []byte {
-	// Ignore errors and just return what we get (if we want an error we can marshal it ourselves)
-	out, _ := xml.Marshal(s)
-	return out
+	return []byte(s.String())
 }
 
-// Convert a stream element to a string.
+// String spits out a valid XML representation without making a call to Marshal (so it's safe to use in MarshalXML)
 func (s *stream) String() string {
-	return string(s.Bytes())
+	var toLine, fromLine string
+	if s.STo != "" {
+		toLine = "to='" + s.STo + "'"
+	} else {
+		toLine = ""
+	}
+	if s.SFrom != "" {
+		fromLine = "from='" + s.SFrom + "'"
+	} else {
+		fromLine = ""
+	}
+
+	return "<stream:stream " + toLine + " " + fromLine + " version='" + s.Version + "' xml:lang='" + s.Lang + "' xmlns='" + s.Xmlns + "' xmlns:stream='http://etherx.jabber.org/streams'>"
 }

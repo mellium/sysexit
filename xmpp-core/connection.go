@@ -11,6 +11,7 @@ func Handle(c net.Conn, l net.Listener) error {
 	defer c.Close()
 	decoder := xml.NewDecoder(c)
 	encoder := xml.NewEncoder(c)
+	_ = encoder
 	for {
 		t, err := decoder.RawToken()
 		if err != nil && err != io.EOF {
@@ -18,9 +19,10 @@ func Handle(c net.Conn, l net.Listener) error {
 		}
 		switch t := t.(type) {
 		case xml.ProcInst:
+		case xml.StartElement:
+			// Jankedy stuff.
 			// TODO: Validate that the inst is XML v 1.0 and if an encoding is
 			// specified that it's UTF-8.
-		case xml.StartElement:
 			if t.Name.Local == "stream" {
 				stream, err := StreamFromStartElement(t)
 
@@ -47,11 +49,12 @@ func Handle(c net.Conn, l net.Listener) error {
 					return err
 				}
 
-				// Encode the new stream element.
-				// Marshal the new stream element and send it.
-				if err := encoder.Encode(s); err != nil {
+				// Write the new stream
+				_, err = c.Write(s.Bytes())
+				if err != nil {
 					return err
 				}
+
 			} else {
 				return errors.New("Invalid start element " + t.Name.Local)
 			}
