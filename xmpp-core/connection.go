@@ -8,7 +8,12 @@ import (
 )
 
 func Handle(c net.Conn, l net.Listener) error {
-	defer c.Close()
+	var err error
+	defer func() {
+		if cerr := c.Close(); err == nil {
+			err = cerr
+		}
+	}()
 	decoder := xml.NewDecoder(c)
 	encoder := xml.NewEncoder(c)
 	_ = encoder

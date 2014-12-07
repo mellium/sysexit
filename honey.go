@@ -28,7 +28,11 @@ func main() {
 			logger.Err(err.Error())
 			return
 		}
-		defer listener.Close()
+		defer func() {
+			if cerr := listener.Close(); err == nil {
+				err = cerr
+			}
+		}()
 		go listen(listener)
 	}
 
@@ -44,7 +48,11 @@ func main() {
 			logger.Err(err.Error())
 			return
 		}
-		defer listener.Close()
+		defer func() {
+			if cerr := listener.Close(); err == nil {
+				err = cerr
+			}
+		}()
 		go listen(listener)
 	}
 
