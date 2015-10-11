@@ -1,2 +1,4 @@
 *.config
 honey
+*.swp
+log
