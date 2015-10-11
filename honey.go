@@ -6,7 +6,7 @@ import (
 	"./config"
 	"./xmpp-core"
 
-	"github.com/SamWhited/logger"
+	"bitbucket.org/SamWhited/logger"
 )
 
 func main() {
