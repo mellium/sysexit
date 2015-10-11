@@ -1,7 +1,7 @@
 package xmpp
 
 import (
-	"github.com/SamWhited/koine"
+	"bitbucket.org/SamWhited/koine"
 	"testing"
 )
 

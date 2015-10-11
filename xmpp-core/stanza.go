@@ -1,8 +1,8 @@
 package xmpp
 
 import (
+	"bitbucket.org/SamWhited/koine"
 	"encoding/xml"
-	"github.com/SamWhited/koine"
 )
 
 type Stanza struct {
