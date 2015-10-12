@@ -9,8 +9,6 @@ import (
 	"bitbucket.org/SamWhited/koine"
 )
 
-const XML_DECLARATION = `<?xml version="1.0" encoding="UTF-8"?>`
-
 func Id() (string, error) {
 	c := 10
 	b := make([]byte, c)
