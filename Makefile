@@ -7,5 +7,5 @@ build: $(PROJECT)
 run:
 	go run honey.go
 
-$(PROJECT): *.go
+$(PROJECT): *.go **/*.go
 	go build
