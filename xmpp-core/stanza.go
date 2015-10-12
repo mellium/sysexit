@@ -10,31 +10,8 @@ type stanza struct {
 	Inner   string `xml:",innerxml"`
 	Sto     string `xml:"to,attr"`
 	Sfrom   string `xml:"from,attr"`
-	Body    string `xml:,chardata,ommitempty"`
-	Lang    string `xml:"xml:lang,attr,ommitempty"`
+	Lang    string `xml:"xml:lang,attr"`
 	XMLName xml.Name
-}
-
-type Message struct {
-	stanza
-}
-
-type Iq struct {
-	stanza
-}
-
-type Presence struct {
-	stanza
-}
-
-func NewStanza(raw string) (*stanza, error) {
-	s := new(stanza)
-
-	if err := xml.Unmarshal([]byte(raw), &s); err != nil {
-		return s, err
-	}
-
-	return s, nil
 }
 
 func (s *stanza) From() (jid.JID, error) {
