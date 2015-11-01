@@ -26,9 +26,9 @@ func Handle(c net.Conn, l net.Listener) error {
 		case xml.ProcInst:
 		case xml.StartElement:
 			// Jankedy stuff.
-			// TODO: Validate that the inst is XML v 1.0 and if an encoding is
+			// TODO: Validate that the inst is XML v1.0 and if an encoding is
 			// specified that it's UTF-8.
-			if t.Name.Local == "stream" {
+			if t.Name == StreamName {
 				stream, err := StreamFromStartElement(t)
 
 				// Send an XML header

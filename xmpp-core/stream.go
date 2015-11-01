@@ -19,11 +19,11 @@ type stream struct {
 }
 
 // The default XML name of XMPP stream elements.
-var Name xml.Name = xml.Name{Space: "stream", Local: "stream"}
+var StreamName xml.Name = xml.Name{Space: "stream", Local: "stream"}
 
 // Fill in stream properties from an XML Start Element.
 func StreamFromStartElement(start xml.StartElement) (stream, error) {
-	if start.Name != Name {
+	if start.Name != StreamName {
 		return stream{}, errors.New(start.Name.Space + ":" + start.Name.Local + " is not a valid start stream tag")
 	}
 
