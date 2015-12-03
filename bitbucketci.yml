@@ -1,0 +1,6 @@
+image: golang:onbuild
+pipeline:
+  - job:
+      script:
+        - go-wrapper download
+        - make build
