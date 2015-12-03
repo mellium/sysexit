@@ -4,7 +4,7 @@ import (
 	"encoding/xml"
 	"errors"
 
-	"bitbucket.org/SamWhited/koine"
+	"bitbucket.org/SamWhited/go-jid"
 )
 
 // Represents an XMPP stream XML start element.
