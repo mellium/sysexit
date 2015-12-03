@@ -58,22 +58,22 @@ func (s *stream) Copy() *stream {
 }
 
 // Get the `from' attribute of an XMPP stream as a JID.
-func (s *stream) From() (jid.JID, error) {
-	return jid.NewJID(s.SFrom)
+func (s *stream) From() (*jid.Jid, error) {
+	return jid.FromString(s.SFrom)
 }
 
 // Get the `to' attribute of an XMPP stream as a JID.
-func (s *stream) To() (jid.JID, error) {
-	return jid.NewJID(s.STo)
+func (s *stream) To() (*jid.Jid, error) {
+	return jid.FromString(s.STo)
 }
 
-// Set the `from' attribute of a stream from a jid.JID.
-func (s *stream) SetFrom(j jid.JID) {
+// Set the `from' attribute of a stream from a jid.Jid.
+func (s *stream) SetFrom(j *jid.Jid) {
 	s.SFrom = j.String()
 }
 
-// Set the `to' attribute of a stream from a jid.JID.
-func (s *stream) SetTo(j jid.JID) {
+// Set the `to' attribute of a stream from a jid.Jid.
+func (s *stream) SetTo(j *jid.Jid) {
 	s.STo = j.String()
 }
 
