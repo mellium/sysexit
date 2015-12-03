@@ -1,4 +1,4 @@
-image: golang:alpine
+image: golang:1.5.1
 pipeline:
   - job:
       script:
