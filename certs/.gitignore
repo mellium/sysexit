@@ -1,0 +1,5 @@
+*.cnf
+!openssl.cnf
+*.key
+*.csr
+*.crt
