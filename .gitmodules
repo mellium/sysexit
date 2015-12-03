@@ -1,3 +1,4 @@
 [submodule "docs"]
 	path = docs
 	url = git@bitbucket.org:SamWhited/honey.git/wiki
+	branch = master
