@@ -16,10 +16,10 @@ func Id() (string, error) {
 	return hex.EncodeToString(b), err
 }
 
-func ServesHost(host jid.JID) (served bool) {
+func ServesHost(host jid.JID, C *config) (served bool) {
 	// TODO: Write a more efficient way to do this.
 	served = false
-	for h := range config.C.Hosts {
+	for h := range C.Hosts {
 		jid, err := jid.NewJID(h.Name)
 		if err != nil {
 			continue

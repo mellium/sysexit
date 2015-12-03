@@ -1,17 +1,10 @@
 package config
 
 import (
-	"errors"
-	"os"
+	"../logging"
 
 	"github.com/BurntSushi/toml"
 )
-
-var C *config
-
-func init() {
-	C = new(config)
-}
 
 // A service for which we should spawn a listener.
 type service struct {
@@ -30,11 +23,6 @@ type host struct {
 // Hosts configuration.
 type hosts []host
 
-// S2S configuration.
-type s2s struct {
-	Services []service `toml:"listen"`
-}
-
 // C2S configuration.
 type c2s struct {
 	Services []service `toml:"listen"`
@@ -42,9 +30,9 @@ type c2s struct {
 
 // Configuration struct.
 type config struct {
-	S2S   s2s   `toml:"s2s"`
-	C2S   c2s   `toml:c2s"`
-	Hosts hosts `toml:"host"`
+	C2S     c2s            `toml:c2s"`
+	Hosts   hosts          `toml:"host"`
+	Logging logging.Config `toml:"logging"`
 }
 
 // Loads a TOML blob into the config struct.
@@ -64,13 +52,8 @@ func (c *config) LoadFile(path string) error {
 const CONFIG_FILE string = "honey.config"
 
 // Flush config and reload.
-func ReloadConfig() error {
-	if info, err := os.Stat(CONFIG_FILE); err == nil && !info.IsDir() {
-		if err := C.LoadFile(CONFIG_FILE); err != nil {
-			return err
-		}
-	} else {
-		return errors.New("Can't find file " + CONFIG_FILE)
-	}
-	return nil
+func Load(path string) (*config, error) {
+	c := new(config)
+	_, err := toml.DecodeFile(path, c)
+	return c, err
 }

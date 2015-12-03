@@ -4,17 +4,22 @@ import (
 	"net"
 
 	"./config"
+	"./logging"
 	"./xmpp-core"
-
-	"bitbucket.org/SamWhited/logger"
 )
 
 func main() {
+
+	c := new(config)
+
+	// Load the config
 	err := config.ReloadConfig()
 	if err != nil {
 		logger.Err(err.Error())
 		return
 	}
+
+	// Setup logging
 
 	// Spawn S2S listeners
 	for _, v := range config.C.S2S.Services {

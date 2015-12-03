@@ -2,13 +2,15 @@
 addr = "127.0.0.1:5222"
 certfile = "default.crt"
 keyfile = "default.key"
+dhparams = "default.dhparams"
 
-[[s2s.listen]]
-addr = "127.0.0.1:5269"
-certfile = "default.crt"
-keyfile = "default.key"
+[logging]
 
-[[host]]
-name = "localhost"
-certfile = "default.crt"
-keyfile = "default.key"
+  [logging.emerg]
+	filename="/var/log/honey/honey.err.log"
+	console=true
+
+	[logging.info]
+	filename="/var/log/honey/honey.log"
+
+	[logging.syslog]
