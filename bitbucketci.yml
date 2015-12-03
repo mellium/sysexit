@@ -1,4 +1,4 @@
-image: golang:onbuild
+image: golang:alpine
 pipeline:
   - job:
       script:
