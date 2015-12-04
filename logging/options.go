@@ -60,6 +60,7 @@ func RAddr(raddr string) Option {
 	}
 }
 
+// FileMode sets the mode (0640 if no option is specified) for the log file.
 func FileMode(mode os.FileMode) Option {
 	return func(o *options) {
 		o.filemode = mode
