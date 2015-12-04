@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./config"
+	"bitbucket.org/SamWhited/honey/config"
 
 	"fmt"
 )

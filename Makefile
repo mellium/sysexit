@@ -5,9 +5,9 @@ build: $(PROJECT)
 
 .PHONEY: run
 run:
-	go run $(PROJECT).go
+	GO15VENDOREXPERIMENT=1 go run $(PROJECT).go
 
 $(PROJECT): *.go **/*.go
-	go build
+	GO15VENDOREXPERIMENT=1 go build
 
 
