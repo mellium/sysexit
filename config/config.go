@@ -1,59 +1,46 @@
 package config
 
 import (
-	"../logging"
-
 	"github.com/BurntSushi/toml"
 )
 
-// A service for which we should spawn a listener.
-type service struct {
-	Addr     string `toml:"addr"`
-	Certfile string `toml:"certfile"`
-	Keyfile  string `toml:"keyfile"`
-}
-
-// A host for which we'll route XMPP stanzas.
-type host struct {
-	Name     string `toml:"name"`
-	Certfile string `toml:"certfile"`
-	Keyfile  string `toml:"keyfile"`
-}
-
-// Hosts configuration.
-type hosts []host
-
-// C2S configuration.
-type c2s struct {
-	Services []service `toml:"listen"`
-}
-
-// Configuration struct.
+// config holds the entire application configuration.
 type config struct {
-	C2S     c2s            `toml:c2s"`
-	Hosts   hosts          `toml:"host"`
-	Logging logging.Config `toml:"logging"`
+	C2S     C2S
+	Loggers []Log `toml:"log"`
 }
 
-// Loads a TOML blob into the config struct.
-func (c *config) LoadBlob(blob string) error {
-	_, err := toml.Decode(blob, c)
-	return err
+// LoadBlob parses a TOML blob and unmarshals it into the config struct.
+func (c *config) LoadBlob(blob []byte) error {
+	return toml.Unmarshal(blob, c)
 }
 
-// Loads a TOML file into the config struct.
+// LoadFile loads a TOML file and unmarshals it into the config struct.
 func (c *config) LoadFile(path string) error {
 	_, err := toml.DecodeFile(path, c)
 	return err
 }
 
-// Config related utility functions
-
-const CONFIG_FILE string = "honey.config"
-
-// Flush config and reload.
-func Load(path string) (*config, error) {
+// Default loads the default config for the application.
+func Default() *config {
 	c := new(config)
-	_, err := toml.DecodeFile(path, c)
-	return c, err
+	err := c.LoadBlob(defaultConfig)
+	if err != nil {
+		panic(err)
+	}
+	return c
+}
+
+// FromBlob loads a new config struct from the given TOML blob.
+func FromBlob(blob []byte) (c *config, err error) {
+	c = new(config)
+	err = c.LoadBlob(blob)
+	return
+}
+
+// FromFile loads a new config struct from the given TOML file.
+func FromFile(path string) (c *config, err error) {
+	c = new(config)
+	err = c.LoadFile(path)
+	return
 }
