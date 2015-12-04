@@ -1,81 +1,37 @@
 package logging
 
 import (
-	"bitbucket.org/SamWhited/multilogger"
+	"io"
 	"log"
+	"log/syslog"
+	"os"
 )
 
-type syslogConfig struct {
-	network string `toml:"network"`
-	raddr   string `toml:"raddr"`
-}
+// New creates a new Logger that will output to several locations (console,
+// syslog, etc.) specified by options.
+func NewLogger(prefix string, flag int, options ...Option) (*log.Logger, error) {
+	o := getOpts(options...)
+	writers := []io.Writer{}
 
-type severityLevelConfig struct {
-	filename string `toml:"filename"`
-	console  bool   `toml:"console"`
-}
-
-// The logging config format includes a table of severity levels which can
-// include filename's and the option to also output to the console (severity
-// levels of `Error` and below will log to STDERR, all others will log to
-// STDOUT). It may also include information about a syslog server (the network
-// and relay address) which should also receive log messages. An empty network
-// and raddr indicates that we should use the local syslog server.
-//
-//    [logging]
-//
-//      [logging.err]
-//      filename="/var/log/honey.err.log"
-//      console=true
-//
-//      [logging.info]
-//      filename="/var/log/honey.log"
-//
-//      [logging.syslog]
-//      network="127.0.0.0"
-//      raddr=""
-//
-type Config struct {
-	emerg  severityLevelConfig `toml:"emerg"`
-	alert  severityLevelConfig `toml:"alert"`
-	crit   severityLevelConfig `toml:"crit"`
-	err    severityLevelConfig `toml:"err"`
-	warn   severityLevelConfig `toml:"warning"`
-	notice severityLevelConfig `toml:"notice"`
-	info   severityLevelConfig `toml:"info"`
-	debug  severityLevelConfig `toml:"debug"`
-	syslog syslogConfig        `toml:"syslog"`
-}
-
-// Log is represents a set of multiloggers which will be used for logging
-// events to the provided loggers.
-type Log struct {
-	config  Config
-	console *multilogger.MultiLogger
-	emerg   *multilogger.MultiLogger
-	alert   *multilogger.MultiLogger
-	crit    *multilogger.MultiLogger
-	err     *multilogger.MultiLogger
-	warn    *multilogger.MultiLogger
-	notice  *multilogger.MultiLogger
-	info    *multilogger.MultiLogger
-	debug   *multilogger.MultiLogger
-}
-
-// New creates a new logger that will obey the given configuration.
-func New(config Config) (*Log, error) {
-	l := &Log{
-		config: config,
+	if !o.noConsole {
+		writers = append(writers, os.Stderr)
 	}
-	emerglog := []log.Logger{}
-	if l.config.emerg.filename != "" {
-	}
-	if l.config.emerg.filename != "" || l.config.emerg.console {
-		l.emerg = multilogger.New()
-	}
-	return l, nil
-}
 
-func (l *Log) Emerg(v ...interface{}) {
-	l.emerg.Print(v...)
+	if o.filename != "" {
+		f, err := os.OpenFile(o.filename, os.O_WRONLY|os.O_CREATE|os.O_APPEND, o.filemode)
+		if err != nil {
+			return nil, err
+		}
+		writers = append(writers, f)
+	}
+
+	if o.syslog {
+		sw, err := syslog.Dial(o.network, o.raddr, o.priority, prefix)
+		if err != nil {
+			return nil, err
+		}
+		writers = append(writers, sw)
+	}
+
+	return log.New(io.MultiWriter(writers...), prefix, flag), nil
 }
