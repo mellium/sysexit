@@ -1,7 +1,6 @@
 package xmpp
 
 import (
-	"bitbucket.org/SamWhited/go-jid"
 	"encoding/xml"
 )
 
