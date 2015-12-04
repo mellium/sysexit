@@ -2,3 +2,6 @@
 	path = docs
 	url = git@bitbucket.org:SamWhited/honey.git/wiki
 	branch = master
+[submodule "vendor/bitbucket.org/SamWhited/go-jid"]
+	path = vendor/bitbucket.org/SamWhited/go-jid
+	url = git@bitbucket.org:SamWhited/go-jid.git
