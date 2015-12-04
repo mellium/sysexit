@@ -70,11 +70,15 @@ func FileMode(mode os.FileMode) Option {
 
 var (
 	// Stdout enables logging output to STDOUT.
-	Stdout Option = func(o *options) {
-		o.stdout = true
-	}
-	// Stderr enables logging output to STDOUT.
-	Stderr Option = func(o *options) {
-		o.stderr = true
-	}
+	Stdout Option = stdout
+	// Stderr enables logging output to STDERR.
+	Stderr Option = stderr
 )
+
+func stdout(o *options) {
+	o.stdout = true
+}
+
+func stderr(o *options) {
+	o.stderr = true
+}
