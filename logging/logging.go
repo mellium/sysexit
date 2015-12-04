@@ -7,14 +7,18 @@ import (
 	"os"
 )
 
-// New creates a new Logger that will output to several locations (console,
-// syslog, etc.) specified by options.
+// New creates a new Logger that will output to several locations at once
+// (eg. to stdout, a file, and syslog).
 func NewLogger(prefix string, flag int, options ...Option) (*log.Logger, error) {
 	o := getOpts(options...)
 	writers := []io.Writer{}
 
-	if o.console {
+	if o.stdout {
 		writers = append(writers, os.Stdout)
+	}
+
+	if o.stderr {
+		writers = append(writers, os.Stderr)
 	}
 
 	if o.filename != "" {

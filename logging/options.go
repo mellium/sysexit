@@ -12,7 +12,8 @@ type options struct {
 	priority syslog.Priority
 	filename string
 	filemode os.FileMode
-	console  bool
+	stdout   bool
+	stderr   bool
 	syslog   bool
 	raddr    string
 	network  string
@@ -68,8 +69,12 @@ func FileMode(mode os.FileMode) Option {
 }
 
 var (
-	// Console enables logging output to STDOUT.
-	Console Option = func(o *options) {
-		o.console = true
+	// Stdout enables logging output to STDOUT.
+	Stdout Option = func(o *options) {
+		o.stdout = true
+	}
+	// Stderr enables logging output to STDOUT.
+	Stderr Option = func(o *options) {
+		o.stderr = true
 	}
 )
