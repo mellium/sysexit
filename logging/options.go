@@ -38,8 +38,8 @@ func Priority(p syslog.Priority) Option {
 	}
 }
 
-// Filename sets the log file to the given path.
-func Filename(f string) Option {
+// FileName sets the log file to the given path.
+func FileName(f string) Option {
 	return func(o *options) {
 		o.filename = f
 	}
