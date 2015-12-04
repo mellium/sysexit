@@ -1,17 +1,20 @@
 [[c2s.listen]]
-addr = "127.0.0.1:5222"
-certfile = "default.crt"
-keyfile = "default.key"
-dhparams = "default.dhparams"
+
+	addr = "127.0.0.1:5222"
+	certfile = "default.crt"
+	keyfile = "default.key"
+	dhparams = "default.dhparams"
 
 [[log]]
+
 	level    = "error"
 	filename = "/var/log/honey/honey.err.log"
 	console = true
 
 [[log]]
-level    = "info"
-filename = "/var/log/honey/honey.log"
+
+	level    = "info"
+	filename = "/var/log/honey/honey.log"
 
 	[log.syslog]
 	network = "127.0.0.0"
