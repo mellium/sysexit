@@ -13,8 +13,8 @@ func NewLogger(prefix string, flag int, options ...Option) (*log.Logger, error) 
 	o := getOpts(options...)
 	writers := []io.Writer{}
 
-	if !o.noConsole {
-		writers = append(writers, os.Stderr)
+	if o.console {
+		writers = append(writers, os.Stdout)
 	}
 
 	if o.filename != "" {

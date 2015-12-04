@@ -9,13 +9,13 @@ import (
 type Option func(o *options)
 
 type options struct {
-	priority  syslog.Priority
-	filename  string
-	filemode  os.FileMode
-	noConsole bool
-	syslog    bool
-	raddr     string
-	network   string
+	priority syslog.Priority
+	filename string
+	filemode os.FileMode
+	console  bool
+	syslog   bool
+	raddr    string
+	network  string
 }
 
 func getOpts(o ...Option) (res options) {
@@ -68,8 +68,8 @@ func FileMode(mode os.FileMode) Option {
 }
 
 var (
-	// NoConsole disables logging output to STDERR.
-	NoConsole Option = func(o *options) {
-		o.noConsole = true
+	// Console enables logging output to STDOUT.
+	Console Option = func(o *options) {
+		o.console = true
 	}
 )
