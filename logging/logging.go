@@ -8,7 +8,7 @@ import (
 )
 
 // New creates a new Logger that will output to several locations at once
-// (eg. to stdout, a file, and syslog).
+// (eg. to stdout, a file, and syslog). Flags can be found in the log package.
 func NewLogger(prefix string, flag int, options ...Option) (*log.Logger, error) {
 	o := getOpts(options...)
 	writers := []io.Writer{}
