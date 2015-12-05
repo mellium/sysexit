@@ -3,18 +3,18 @@ package main
 import (
 	"os"
 
-	log "github.com/Sirupsen/logrus"
+	"github.com/Sirupsen/logrus"
 	flag "github.com/ogier/pflag"
 
-	"bitbucket.org/SamWhited/honey/config"
+	"bitbucket.org/SamWhited/honey"
 )
 
 var configFile string
+var log *logrus.Logger
 
 func init() {
-
 	// Setup default logging options
-	log.SetLevel(log.InfoLevel)
+	log = logrus.New()
 
 	// Setup flags
 	flag.StringVar(&configFile, "config", "config.toml", "Selects the config file")
@@ -24,7 +24,7 @@ func init() {
 func main() {
 
 	// Load the config
-	err = c.LoadFile(configFile)
+	c, err := honey.ConfigFromFile(configFile)
 	if err != nil {
 		if os.IsNotExist(err) {
 			log.Info(err)
@@ -33,5 +33,5 @@ func main() {
 		}
 	}
 
-	log.Infof("%+v\n", c)
+	honey.SetupLogging("honey", c.Log, log)
 }

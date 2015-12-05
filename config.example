@@ -5,17 +5,20 @@
 	keyfile = "default.key"
 	dhparams = "default.dhparams"
 
-[[log]]
+[log]
 
-	level    = "error"
-	filename = "/var/log/honey/honey.err.log"
-	console = true
-
-[[log]]
-
-	level    = "info"
-	filename = "/var/log/honey/honey.log"
+	[log.console]
+	level = "info"
 
 	[log.syslog]
-	network = "127.0.0.0"
-	raddr = ""
+	level   = "info"
+	network = "udp"
+	# raddr = ""
+
+	[[log.file]]
+	level    = "error"
+	filename = "/var/log/honey/honey.err.log"
+
+	[[log.file]]
+	level    = "info"
+	filename = "/var/log/honey/honey.log"

@@ -1,25 +1,11 @@
-// The config package loads a TOML (https://github.com/toml-lang/toml) file and
-// unmarshals it into a new config struct.
-package config
+package honey
 
 import (
 	"github.com/BurntSushi/toml"
 )
 
-type syslog struct {
-	Network string `toml:"network"`
-	RAddr   string `toml:"raddr"`
-}
-
-type log struct {
-	Level    string `toml:"level"`
-	Filename string `toml:"filename"`
-	Console  bool   `toml:"console"`
-	Syslog   syslog `toml:"syslog"`
-}
-
 type config struct {
-	Loggers  []log `toml:"log"`
+	Log      log `toml:"log"`
 	metaData toml.MetaData
 }
 
@@ -43,15 +29,15 @@ func (c *config) MetaData() toml.MetaData {
 	return c.metaData
 }
 
-// FromBlob loads a new config struct from the given TOML blob.
-func FromBlob(blob string) (c *config, err error) {
+// ConfigFromBlob loads a new config struct from the given TOML blob.
+func ConfigFromBlob(blob string) (c *config, err error) {
 	c = new(config)
 	err = c.LoadBlob(blob)
 	return
 }
 
-// FromFile loads a new config struct from the given TOML file.
-func FromFile(path string) (c *config, err error) {
+// ConfigFromFile loads a new config struct from the given TOML file.
+func ConfigFromFile(path string) (c *config, err error) {
 	c = new(config)
 	err = c.LoadFile(path)
 	return
