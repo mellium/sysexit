@@ -1,22 +1,37 @@
 package main
 
 import (
-	"bitbucket.org/SamWhited/honey/config"
+	"os"
 
-	"fmt"
+	log "github.com/Sirupsen/logrus"
+	flag "github.com/ogier/pflag"
+
+	"bitbucket.org/SamWhited/honey/config"
 )
+
+var configFile string
+
+func init() {
+
+	// Setup default logging options
+	log.SetLevel(log.InfoLevel)
+
+	// Setup flags
+	flag.StringVar(&configFile, "config", "config.toml", "Selects the config file")
+	flag.Parse()
+}
 
 func main() {
 
 	// Load the config
-
-	c := config.Default()
-
-	err := c.LoadFile("config.toml")
+	err = c.LoadFile(configFile)
 	if err != nil {
-		// log.Fatalln(err)
-		fmt.Println(err.Error())
+		if os.IsNotExist(err) {
+			log.Info(err)
+		} else {
+			log.Fatal("Error while loading config: ", err)
+		}
 	}
 
-	fmt.Printf("%#v\n", c)
+	log.Infof("%+v\n", c)
 }
