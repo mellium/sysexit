@@ -1,4 +1,4 @@
-package honey
+package config
 
 import (
 	"github.com/BurntSushi/toml"
