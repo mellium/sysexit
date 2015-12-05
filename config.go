@@ -4,75 +4,52 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
-var defaultConfig = []byte(`
-[[c2s.listen]]
-addr = "test"
-
+var defaultConfig = `
 [[log]]
 
-	level    = "info"
+	level   = "info"
+	console = true
+`
 
-	[log.syslog]
-	network = ""
-	raddr = ""
-`)
-
-// A Service is anything for which we should spawn a listener.
-type Service struct {
-	Addr     string `toml:"addr"`
-	Certfile string `toml:"certfile"`
-	Keyfile  string `toml:"keyfile"`
-}
-
-// Host is a host for which we'll route XMPP stanzas.
-type Host struct {
-	Name     string `toml:"name"`
-	Certfile string `toml:"certfile"`
-	Keyfile  string `toml:"keyfile"`
-}
-
-// Hosts is a list of all the hosts served.
-type Hosts []Host
-
-// C2S containst configuration for client to server connections.
-type C2S struct {
-	Services []Service `toml:"listen"`
-}
-
-// Syslog describes a local (empty network string) or remote syslog server.
-type Syslog struct {
+type syslog struct {
 	Network string `toml:"network"`
 	RAddr   string `toml:"raddr"`
 }
 
-// Log represents a single logger that may log to a syslog server, a filename,
-// and/or the console.
-type Log struct {
+type log struct {
 	Level    string `toml:"level"`
 	Filename string `toml:"filename"`
 	Console  bool   `toml:"console"`
-	Syslog   Syslog `toml:"syslog"`
+	Syslog   syslog `toml:"syslog"`
 }
 
-// config holds the entire application configuration.
 type config struct {
-	C2S     C2S
-	Loggers []Log `toml:"log"`
+	Loggers  []log `toml:"log"`
+	metaData toml.MetaData
 }
 
 // LoadBlob parses a TOML blob and unmarshals it into the config struct.
-func (c *config) LoadBlob(blob []byte) error {
-	return toml.Unmarshal(blob, c)
+func (c *config) LoadBlob(blob string) error {
+	md, err := toml.Decode(blob, c)
+	c.metaData = md
+	return err
 }
 
 // LoadFile loads a TOML file and unmarshals it into the config struct.
 func (c *config) LoadFile(path string) error {
-	_, err := toml.DecodeFile(path, c)
+	md, err := toml.DecodeFile(path, c)
+	c.metaData = md
 	return err
 }
 
-// Default loads the default config for the application.
-func Default() *config {
+// MetaData allows you to access information about the TOML keys that were
+// parsed to generate the config.
+func (c *config) MetaData() toml.MetaData {
+	return c.metaData
+}
+
+// DefaultConfig loads the default config for the application.
+func DefaultConfig() *config {
 	c := new(config)
 	err := c.LoadBlob(defaultConfig)
 	if err != nil {
@@ -82,7 +59,7 @@ func Default() *config {
 }
 
 // FromBlob loads a new config struct from the given TOML blob.
-func FromBlob(blob []byte) (c *config, err error) {
+func FromBlob(blob string) (c *config, err error) {
 	c = new(config)
 	err = c.LoadBlob(blob)
 	return
