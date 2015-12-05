@@ -4,13 +4,6 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
-var defaultConfig = `
-[[log]]
-
-	level   = "info"
-	console = true
-`
-
 type syslog struct {
 	Network string `toml:"network"`
 	RAddr   string `toml:"raddr"`
@@ -46,16 +39,6 @@ func (c *config) LoadFile(path string) error {
 // parsed to generate the config.
 func (c *config) MetaData() toml.MetaData {
 	return c.metaData
-}
-
-// DefaultConfig loads the default config for the application.
-func DefaultConfig() *config {
-	c := new(config)
-	err := c.LoadBlob(defaultConfig)
-	if err != nil {
-		panic(err)
-	}
-	return c
 }
 
 // FromBlob loads a new config struct from the given TOML blob.
