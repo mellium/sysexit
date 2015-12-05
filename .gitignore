@@ -1,5 +1,5 @@
 *.config
 *.toml
 honey
-*.swp
+*.sw[op]
 log
