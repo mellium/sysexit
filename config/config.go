@@ -1,3 +1,5 @@
+// The config package loads a TOML (https://github.com/toml-lang/toml) file and
+// unmarshals it into a new config struct.
 package config
 
 import (
