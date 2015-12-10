@@ -1,9 +1,20 @@
-[[c2s.listen]]
+[[virtualhost]]
 
-	addr = "127.0.0.1:5222"
-	certfile = "default.crt"
-	keyfile = "default.key"
-	dhparams = "default.dhparams"
+	domain = "samwhited.com"
+
+	[virtualhost.c2s]
+		addr = "0.0.0.0:5222"
+		certfile = "default.crt"
+		keyfile = "default.key"
+		dhparams = "default.dhparams"
+
+	[virtualhost.s2s]
+		addr = ":5223"
+		certfile = "default.crt"
+		keyfile = "default.key"
+		dhparams = "default.dhparams"
+
+
 
 [log]
 

@@ -10,29 +10,29 @@ import (
 	logrus_syslog "github.com/Sirupsen/logrus/hooks/syslog"
 )
 
-type log struct {
-	Files   []logfile  `toml:"file"`
-	Console logconsole `toml:"console"`
-	Syslog  logsyslog  `toml:"syslog"`
+type Log struct {
+	Files   []Logfile  `toml:"file"`
+	Console Logconsole `toml:"console"`
+	Syslog  Logsyslog  `toml:"syslog"`
 }
 
-type logsyslog struct {
+type Logsyslog struct {
 	Level   string `toml:"level"`
 	Network string `toml:"network"`
 	Raddr   string `toml:"raddr"`
 }
 
-type logfile struct {
+type Logfile struct {
 	Level    string `toml:"level"`
 	Filename string `toml:"filename"`
 }
 
-type logconsole struct {
+type Logconsole struct {
 	Level string `toml:"level"`
 }
 
 // SetupLogging configures the given logger with the supplied log config.
-func SetupLogging(logtag string, c log, log *logrus.Logger) {
+func SetupLogging(logtag string, c Log, log *logrus.Logger) {
 	// Setup console logging
 	if c.Console.Level == "" {
 		log.Out = nil

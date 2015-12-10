@@ -33,5 +33,12 @@ func main() {
 		}
 	}
 
+	// Setup logging
 	honey.SetupLogging("honey", c.Log, log)
+
+	// Listen for C2S connections
+	err = honey.VHostsListenAndServe(c.VHosts)
+	if err != nil {
+		log.Error(err.Error())
+	}
 }

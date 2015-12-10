@@ -5,7 +5,8 @@ import (
 )
 
 type config struct {
-	Log      log `toml:"log"`
+	Log      Log           `toml:"log"`
+	VHosts   []VirtualHost `toml:"virtualhost"`
 	metaData toml.MetaData
 }
 
