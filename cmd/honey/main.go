@@ -1,21 +1,17 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
-	"github.com/Sirupsen/logrus"
 	flag "github.com/ogier/pflag"
 
 	"bitbucket.org/SamWhited/honey"
 )
 
 var configFile string
-var log *logrus.Logger
 
 func init() {
-	// Setup default logging options
-	log = logrus.New()
-
 	// Setup flags
 	flag.StringVar(&configFile, "config", "config.toml", "Selects the config file")
 	flag.Parse()
@@ -27,18 +23,23 @@ func main() {
 	c, err := honey.ConfigFromFile(configFile)
 	if err != nil {
 		if os.IsNotExist(err) {
-			log.Info(err)
+			fmt.Println("Warning:", err)
 		} else {
-			log.Fatal("Error while loading config: ", err)
+			fmt.Println("Error while loading config: ", err)
+			os.Exit(1)
 		}
 	}
 
 	// Setup logging
-	honey.SetupLogging("honey", c.Log, log)
+	log := honey.SetupLogging("honey", c.Log)
 
-	// Listen for C2S connections
-	err = honey.VHostsListenAndServe(c.VHosts)
-	if err != nil {
-		log.Error(err.Error())
+	for _, v := range c.VHosts {
+		server := honey.ServerFromConfig(v)
+		err := server.ListenAndServe()
+		if err != nil {
+			log.Error(err)
+		}
 	}
+
+	select {}
 }

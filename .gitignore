@@ -3,3 +3,5 @@
 honey
 *.sw[op]
 log
+*.crt
+*.key

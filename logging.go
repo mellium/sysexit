@@ -10,6 +10,13 @@ import (
 	logrus_syslog "github.com/Sirupsen/logrus/hooks/syslog"
 )
 
+var log *logrus.Logger
+
+func init() {
+	// Setup default logging options
+	log = logrus.New()
+}
+
 type Log struct {
 	Files   []Logfile  `toml:"file"`
 	Console Logconsole `toml:"console"`
@@ -32,7 +39,7 @@ type Logconsole struct {
 }
 
 // SetupLogging configures the given logger with the supplied log config.
-func SetupLogging(logtag string, c Log, log *logrus.Logger) {
+func SetupLogging(logtag string, c Log) *logrus.Logger {
 	// Setup console logging
 	if c.Console.Level == "" {
 		log.Out = nil
@@ -106,4 +113,6 @@ func SetupLogging(logtag string, c Log, log *logrus.Logger) {
 			}
 		}
 	}
+
+	return log
 }
