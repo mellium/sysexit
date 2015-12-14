@@ -1,4 +1,4 @@
-package honey
+package mel
 
 import (
 	"github.com/BurntSushi/toml"

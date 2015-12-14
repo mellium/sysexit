@@ -1,6 +1,7 @@
 *.config
 *.toml
-honey
+mel
+mellium
 *.sw[op]
 log
 *.crt

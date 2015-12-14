@@ -1,9 +1,9 @@
-package honey
+package mel
 
 import (
 	"crypto/tls"
 
-	"bitbucket.org/SamWhited/honey/server"
+	"bitbucket.org/mellium/xmpp/server"
 )
 
 // C2S contains configuration for client to server connections.

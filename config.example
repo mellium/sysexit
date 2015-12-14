@@ -28,8 +28,8 @@
 
 	[[log.file]]
 	level    = "error"
-	filename = "/var/log/honey/honey.err.log"
+	filename = "/var/log/mellium/mel.err.log"
 
 	[[log.file]]
 	level    = "info"
-	filename = "/var/log/honey/honey.log"
+	filename = "/var/log/mellium/mel.log"

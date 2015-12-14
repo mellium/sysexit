@@ -6,7 +6,7 @@ import (
 
 	flag "github.com/ogier/pflag"
 
-	"bitbucket.org/SamWhited/honey"
+	"bitbucket.org/mellium/mel"
 )
 
 var configFile string
@@ -20,7 +20,7 @@ func init() {
 func main() {
 
 	// Load the config
-	c, err := honey.ConfigFromFile(configFile)
+	c, err := mel.ConfigFromFile(configFile)
 	if err != nil {
 		if os.IsNotExist(err) {
 			fmt.Println("Warning:", err)
@@ -31,10 +31,10 @@ func main() {
 	}
 
 	// Setup logging
-	log := honey.SetupLogging("honey", c.Log)
+	log := mel.SetupLogging("mellium", c.Log)
 
 	for _, v := range c.VHosts {
-		server := honey.ServerFromConfig(v)
+		server := mel.ServerFromConfig(v)
 		err := server.ListenAndServe()
 		if err != nil {
 			log.Error(err)

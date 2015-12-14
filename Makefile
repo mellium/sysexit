@@ -1,4 +1,4 @@
-PROJECT=honey
+PROJECT=mel
 
 .PHONEY: build
 build: $(PROJECT)
