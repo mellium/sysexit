@@ -7,7 +7,7 @@ build: $(PROJECT)
 run:
 	GO15VENDOREXPERIMENT=1 go run ./cmd/$(PROJECT)/main.go
 
-$(PROJECT): **/*.go
+$(PROJECT): *.go
 	GO15VENDOREXPERIMENT=1 go build ./cmd/$(PROJECT)
 
 
