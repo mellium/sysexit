@@ -6,3 +6,4 @@ mellium
 log
 *.crt
 *.key
+*.svg
