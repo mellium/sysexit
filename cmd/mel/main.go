@@ -20,7 +20,7 @@ func init() {
 func main() {
 
 	// Load the config
-	c, err := mel.ConfigFromFile(configFile)
+	c, err := mel.LoadFile(configFile)
 	if err != nil {
 		if os.IsNotExist(err) {
 			fmt.Println("Warning:", err)
