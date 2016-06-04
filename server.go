@@ -3,7 +3,7 @@ package mel
 import (
 	"crypto/tls"
 
-	"bitbucket.org/mellium/xmpp/server"
+	"mellium.im/xmpp/server"
 )
 
 // C2S contains configuration for client to server connections.

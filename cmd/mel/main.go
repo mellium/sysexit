@@ -6,7 +6,7 @@ import (
 
 	flag "github.com/ogier/pflag"
 
-	"bitbucket.org/mellium/mel"
+	"mellium.im/mel"
 )
 
 var configFile string
