@@ -1,6 +1,14 @@
-image: golang:latest
-pipeline:
-  - job:
-      script:
-        - go-wrapper download
-        - make build
+image: golang:1.9
+pipelines:
+  default:
+    - step:
+        script:
+          - go version
+          - apk update && apk add git
+          - go get github.com/golang/dep/cmd/dep
+          - mkdir -p "$GOPATH/src/mellium.im/"
+          - ln -s "`pwd`" "$GOPATH/src/mellium.im/mel"
+          - cd "$GOPATH/src/mellium.im/mel"
+          - dep ensure
+          - go vet ./...
+          - go test -race -cover ./...

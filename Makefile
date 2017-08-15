@@ -1,20 +1,19 @@
-PROJECT=mel
+VERSION!=git describe --tags --dirty
+COMMIT!=git rev-parse --short HEAD 2>/dev/null
+LOCAL_DEPS!=go list -f '{{ join .Imports "\n" }}' . | grep '^mellium.im/mel' | cut -c16-
 
-.PHONEY: build
-build: $(PROJECT)
+LDFLAGS =-X main.commit=$(COMMIT)
+LDFLAGS+=-X main.version=$(VERSION)
+LDFLAGS+=-X main.defConfigFile=config.toml
 
-.PHONEY: run
-run:
-	GO15VENDOREXPERIMENT=1 go run ./cmd/$(PROJECT)/main.go
+mel: *.go $(LOCAL_DEPS) vendor
+	go build -o $@ \
+           -ldflags "$(LDFLAGS)"
 
-$(PROJECT): *.go
-	GO15VENDOREXPERIMENT=1 go build ./cmd/$(PROJECT)
+vendor: Gopkg.lock Gopkg.toml
+	dep ensure
 
-.PHONEY: test
-test:
-	GO15VENDOREXPERIMENT=1 go test $$(go list ./... | grep -v '/vendor/')
-
-deps.svg: *.go
+deps.svg: Gopkg.lock
 	(   echo "digraph G {"; \
 	go list -f '{{range .Imports}}{{printf "\t%q -> %q;\n" $$.ImportPath .}}{{end}}' \
 		$$(go list -f '{{join .Deps " "}}' .) .; \

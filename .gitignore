@@ -1,9 +1,10 @@
-*.config
-*.toml
-mel
-mellium
-*.sw[op]
-log
+*.bak
 *.crt
 *.key
+mel
+mellium
+*.so
 *.svg
+vendor/
+config.toml
+pkg/

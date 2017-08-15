@@ -9,7 +9,7 @@ work is going into Mellium's [XMPP Library][koine].
 ## License
 
 Mellium may be used under the terms of the BSD 2-Clause License a copy of which
-may be found in the file [LICENSE.md][LICENSE].
+may be found in [LICENSE] file.
 
-[koine]: mellium.im/xmpp
-[LICENSE]: ./LICENSE.md
+[koine]: https://mellium.im/xmpp
+[LICENSE]: ./LICENSE
