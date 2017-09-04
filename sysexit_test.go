@@ -13,7 +13,7 @@ import (
 var _ error = sysexit.Code(0)
 
 func TestCode(t *testing.T) {
-	if es := sysexit.USAGE.Error(); es != "" {
+	if es := sysexit.ErrUsage.Error(); es != "" {
 		t.Errorf("Expected no error output, got %s", es)
 	}
 }
