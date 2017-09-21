@@ -6,7 +6,7 @@
 // applications in Unix like environments.
 //
 // For more info on these errors see the man page for SYSEXITS(3) on a BSD.
-package sysexit
+package sysexit // import "mellium.im/sysexit"
 
 // Code is an error that corresponds to an exit code.
 type Code int
