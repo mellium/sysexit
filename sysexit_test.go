@@ -7,7 +7,7 @@ package sysexit_test
 import (
 	"testing"
 
-	"mellium.im/mel/internal/sysexit"
+	"mellium.im/sysexit"
 )
 
 var _ error = sysexit.Code(0)
