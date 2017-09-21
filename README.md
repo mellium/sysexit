@@ -1,10 +1,13 @@
 # sysexit
 
-[![GoDoc](https://godoc.org/bitbucket.org/SamWhited/sysexit?status.svg)](https://godoc.org/bitbucket.org/SamWhited/sysexit)
+[![GoDoc](https://godoc.org/mellium.im/sysexit?status.svg)](https://godoc.org/mellium.im/sysexit)
 
 
-Import with:
+This package contains a list of system exit codes and descriptions for when they
+should be used. For more information see [sysexits(3)].
 
 ```go
-import "bitbucket.org/SamWhited/sysexit"
+import "mellium.im/sysexit"
 ```
+
+[sysexits(3)]: https://www.freebsd.org/cgi/man.cgi?query=sysexits
