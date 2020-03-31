@@ -1,6 +1,6 @@
 # sysexit
 
-[![GoDoc](https://godoc.org/mellium.im/sysexit?status.svg)](https://godoc.org/mellium.im/sysexit)
+[![GoDoc](https://pkg.go.dev/mellium.im/sysexit?status.svg)](https://pkg.go.dev/mellium.im/sysexit)
 
 
 This package contains a list of system exit codes and descriptions for when they
