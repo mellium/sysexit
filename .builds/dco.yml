@@ -6,7 +6,7 @@ sources:
 tasks:
   - dco: |
       git version
-      cd xmpp/
+      cd sysexit/
       function on_err {
         cat <<EOF
       Failed to sign the Developer Certificate of Origin (DCO)!
