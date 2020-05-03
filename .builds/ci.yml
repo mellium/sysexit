@@ -2,7 +2,7 @@ image: freebsd/latest
 packages:
   - go
 sources:
-  - https://github.com/mellium/sysexit
+  - https://git.sr.ht/~samwhited/sysexit
 tasks:
   - setup: |
       go version
